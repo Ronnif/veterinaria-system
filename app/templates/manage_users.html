@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Gestionar Usuarios{% endblock %}
+{% block content %}
+
+<h2>Gestión de Usuarios</h2>
+<a href="{{ url_for('main.create_user_view') }}">Crear nuevo usuario</a>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Email</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+            <a href="{{ url_for('main.reset_password', user_id=user.id) }}">Restablecer contraseña</a>
+            {% if user.role != 'admin' %}
+            <form action="{{ url_for('main.delete_user_view', user_id=user.id) }}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">Eliminar</button>
+            </form>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<p>show_back_menu: {{ show_back_menu }}</p>
+{% endblock %}

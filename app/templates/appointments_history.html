@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Historial de Citas{% endblock %}
+{% block content %}
+
+<h2>Historial de Citas</h2>
+<form method="get">
+    <label for="client_id">Cliente:</label>
+    <select name="client_id" id="client_id">
+        <option value="">Todos</option>
+        {% for client in clients %}
+        <option value="{{ client.id }}" {% if request.args.get('client_id') == client.id|string %}selected{% endif %}>{{ client.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="vet_id">Veterinario:</label>
+    <select name="vet_id" id="vet_id">
+        <option value="">Todos</option>
+        {% for vet in vets %}
+        <option value="{{ vet.id }}" {% if request.args.get('vet_id') == vet.id|string %}selected{% endif %}>{{ vet.username }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="date">Fecha:</label>
+    <input type="date" name="date" id="date" value="{{ request.args.get('date', '') }}">
+
+    <button type="submit">Filtrar</button>
+</form>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Cliente</th>
+        <th>Mascota</th>
+        <th>Servicio</th>
+        <th>Veterinario</th>
+        <th>Estado de pago</th>
+    </tr>
+    {% for appointment in appointments %}
+    <tr>
+        <td>{{ appointment.date }}</td>
+        <td>{{ appointment.time }}</td>
+        <td>{{ appointment.client.name }}</td>
+        <td>{{ appointment.pet.name }}</td>
+        <td>{{ appointment.service.name }}</td>
+        <td>{{ appointment.vet.username }}</td>
+        <td>
+            {% if appointment.paid %}
+                <span class="estado-pagado">Pagado</span>
+            {% else %}
+                <span class="estado-pendiente">Pendiente</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

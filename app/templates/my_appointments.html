@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Mis Citas{% endblock %}
+{% block content %}
+
+<h2>Mis Citas</h2>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Cliente</th>
+        <th>Mascota</th>
+        <th>Servicio</th>
+        <th>Acciones</th>
+    </tr>
+    {% for appointment in appointments %}
+    <tr>
+        <td>{{ appointment.date }}</td>
+        <td>{{ appointment.time }}</td>
+        <td>{{ appointment.client.name }}</td>
+        <td>{{ appointment.pet.name }}</td>
+        <td>{{ appointment.service.name }}</td>
+        <td>
+            <a href="{{ url_for('main.history_pet', pet_id=appointment.pet.id) }}">Ver historial</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

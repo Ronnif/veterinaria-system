@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Panel principal{% endblock %}
+{% block content %}
+<div style="max-width: 600px; margin: 2em auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 2em;">
+    <div style="text-align: center;">
+        {% if current_user.role == 'admin' %}
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Admin" width="80" style="margin-bottom: 1em;">
+            <h2>Bienvenido, Administrador</h2>
+            <p>Gestiona tu clínica veterinaria desde este panel.</p>
+        {% elif current_user.role == 'receptionist' %}
+            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" alt="Recepcionista" width="80" style="margin-bottom: 1em;">
+            <h2>Bienvenido, Recepcionista</h2>
+            <p>Gestiona clientes, mascotas y citas desde este panel.</p>
+        {% elif current_user.role == 'vet' %}
+            <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" alt="Veterinario" width="80" style="margin-bottom: 1em;">
+            <h2>Bienvenido, Veterinario</h2>
+            <p>Consulta tus citas y gestiona historiales clínicos desde este panel.</p>
+        {% endif %}
+    </div>
+    <hr style="margin: 2em 0;">
+    <div style="display: flex; flex-wrap: wrap; gap: 1em; justify-content: center;">
+        {% if current_user.role == 'admin' %}
+            <a href="{{ url_for('main.manage_users') }}" style="text-decoration:none; color:#fff; background:#2980b9; padding:1em 2em; border-radius:8px; font-weight:bold;">👤 Gestionar usuarios</a>
+            <a href="{{ url_for('main.register_client') }}" style="text-decoration:none; color:#fff; background:#27ae60; padding:1em 2em; border-radius:8px; font-weight:bold;">🐾 Registrar cliente</a>
+            <a href="{{ url_for('main.register_pet') }}" style="text-decoration:none; color:#fff; background:#8e44ad; padding:1em 2em; border-radius:8px; font-weight:bold;">🐶 Registrar mascota</a>
+            <a href="{{ url_for('main.schedule_appointment') }}" style="text-decoration:none; color:#fff; background:#e67e22; padding:1em 2em; border-radius:8px; font-weight:bold;">📅 Agendar cita</a>
+            <a href="{{ url_for('main.payments') }}" style="text-decoration:none; color:#fff; background:#c0392b; padding:1em 2em; border-radius:8px; font-weight:bold;">💳 Registrar pagos</a>
+            <a href="{{ url_for('main.appointments_history') }}" style="text-decoration:none; color:#fff; background:#16a085; padding:1em 2em; border-radius:8px; font-weight:bold;">📖 Historial de citas</a>
+            <a href="{{ url_for('main.change_password') }}" style="text-decoration:none; color:#fff; background:#34495e; padding:1em 2em; border-radius:8px; font-weight:bold;">🔒 Cambiar contraseña</a>
+        {% elif current_user.role == 'receptionist' %}
+            <a href="{{ url_for('main.register_client') }}" style="text-decoration:none; color:#fff; background:#27ae60; padding:1em 2em; border-radius:8px; font-weight:bold;">🐾 Registrar cliente</a>
+            <a href="{{ url_for('main.register_pet') }}" style="text-decoration:none; color:#fff; background:#8e44ad; padding:1em 2em; border-radius:8px; font-weight:bold;">🐶 Registrar mascota</a>
+            <a href="{{ url_for('main.schedule_appointment') }}" style="text-decoration:none; color:#fff; background:#e67e22; padding:1em 2em; border-radius:8px; font-weight:bold;">📅 Agendar cita</a>
+            <a href="{{ url_for('main.payments') }}" style="text-decoration:none; color:#fff; background:#c0392b; padding:1em 2em; border-radius:8px; font-weight:bold;">💳 Registrar pagos</a>
+            <a href="{{ url_for('main.appointments_history') }}" style="text-decoration:none; color:#fff; background:#16a085; padding:1em 2em; border-radius:8px; font-weight:bold;">📖 Historial de citas</a>
+            <a href="{{ url_for('main.change_password') }}" style="text-decoration:none; color:#fff; background:#34495e; padding:1em 2em; border-radius:8px; font-weight:bold;">🔒 Cambiar contraseña</a>
+        {% elif current_user.role == 'vet' %}
+            <a href="{{ url_for('main.my_appointments') }}" style="text-decoration:none; color:#fff; background:#2980b9; padding:1em 2em; border-radius:8px; font-weight:bold;">📅 Mis citas</a>
+            <a href="{{ url_for('main.history') }}" style="text-decoration:none; color:#fff; background:#16a085; padding:1em 2em; border-radius:8px; font-weight:bold;">📖 Historial clínico</a>
+            <a href="{{ url_for('main.change_password') }}" style="text-decoration:none; color:#fff; background:#34495e; padding:1em 2em; border-radius:8px; font-weight:bold;">🔒 Cambiar contraseña</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Registrar Pagos{% endblock %}
+{% block content %}
+
+<h2>Registrar Pagos</h2>
+{% if appointments|length == 0 %}
+    <p>No hay citas registradas.</p>
+{% else %}
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Cliente</th>
+        <th>Mascota</th>
+        <th>Servicio</th>
+        <th>Veterinario</th>
+        <th>Estado de pago</th>
+        <th>Acción</th>
+    </tr>
+    {% for appointment in appointments %}
+    <tr>
+        <td>{{ appointment.date }}</td>
+        <td>{{ appointment.time }}</td>
+        <td>{{ appointment.client.name }}</td>
+        <td>{{ appointment.pet.name }}</td>
+        <td>{{ appointment.service.name }}</td>
+        <td>{{ appointment.vet.username }}</td>
+        <td>
+            {% if appointment.paid %}
+                <span class="estado-pagado">Pagado</span>
+            {% else %}
+                <span class="estado-pendiente">Pendiente</span>
+            {% endif %}
+        </td>
+        <td>
+            {% if not appointment.paid %}
+            <form method="post" style="display:inline;">
+                <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                <button type="submit">Marcar como pagado</button>
+            </form>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+{% endblock %}

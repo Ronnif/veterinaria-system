@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Agregar observación clínica{% endblock %}
+{% block content %}
+
+<h2>Agregar observación a {{ pet.name }}</h2>
+<form method="post" style="max-width:600px;">
+    <label for="observation">Observación clínica:</label>
+    <textarea id="observation" name="observation" required rows="8" style="width:100%; min-width:250px; max-width:100%; resize:vertical; padding:0.5em; font-size:1em; border-radius:6px; border:1px solid #ccc;"></textarea>
+    <button type="submit" class="btn btn-primary" style="margin-top:1em;">Guardar</button>
+</form>
+<a href="{{ url_for('main.history_pet', pet_id=pet.id) }}">← Volver al historial</a>
+{% endblock %}

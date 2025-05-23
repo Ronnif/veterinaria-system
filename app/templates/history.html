@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Historial Clínico{% endblock %}
+{% block content %}
+
+<h2>
+    {% if pet %}
+        Historial Clínico de {{ pet.name }}
+    {% else %}
+        Historial Clínico
+    {% endif %}
+</h2>
+{% if histories and histories|length > 0 %}
+<ul>
+    {% for history in histories %}
+    <li><strong>{{ history.date }}</strong>: {{ history.observations }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<ul>
+    <li>No hay historial clínico registrado.</li>
+</ul>
+{% endif %}
+{% if current_user.is_authenticated and current_user.role == 'vet' and pet %}
+    <a href="{{ url_for('main.add_clinical_observation', pet_id=pet.id) }}">Agregar observación clínica</a>
+{% endif %}
+{% endblock %}

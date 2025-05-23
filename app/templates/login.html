@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Iniciar sesión{% endblock %}
+{% block content %}
+<style>
+form label {
+    display: block;
+    margin-top: 1em;
+}
+form input, form button {
+    width: 100%;
+    padding: 0.5em;
+    margin-top: 0.2em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+form button {
+    background: #2a7ae2;
+    color: #fff;
+    border: none;
+    margin-top: 1em;
+    cursor: pointer;
+    font-weight: bold;
+}
+form button:hover {
+    background: #1a5bb8;
+}
+.flash-messages li {
+    color: red;
+    font-weight: bold;
+}
+</style>
+<h2>Iniciar sesión</h2>
+<form method="post">
+    <label for="username">Usuario:</label>
+    <input type="text" id="username" name="username" required placeholder="Usuario" title="Nombre de usuario">
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" name="password" required placeholder="Contraseña" title="Contraseña">
+    <button type="submit">Entrar</button>
+</form>
+{% endblock %}

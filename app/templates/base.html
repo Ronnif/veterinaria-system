@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Veterinaria{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f6f6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #2a7ae2;
+            color: #fff;
+            padding: 1em;
+        }
+        main {
+            margin: 2em auto;
+            padding: 2em;
+            background: #fff;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        h1, h2 {
+            color: #2a7ae2;
+        }
+        form label {
+            display: block;
+            margin-top: 1em;
+        }
+        form input, form select, form button {
+            width: 100%;
+            padding: 0.5em;
+            margin-top: 0.2em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        form button {
+            background: #2a7ae2;
+            color: #fff;
+            border: none;
+            margin-top: 1em;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        form button:hover {
+            background: #1a5bb8;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 0.5em;
+        }
+        a {
+            color: #2a7ae2;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background: #2a7ae2;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background: #f6f6f6;
+        }
+        .estado-pagado {
+            color: #388e3c;
+            font-weight: bold;
+        }
+        .estado-pendiente {
+            color: #e53935;
+            font-weight: bold;
+        }
+        .logout-btn {
+            background: #e53935;
+            color: #fff !important;
+            padding: 0.4em 1em;
+            border-radius: 4px;
+            font-weight: bold;
+            border: none;
+            text-decoration: none;
+            margin-left: 1em;
+            transition: background 0.2s;
+            display: inline-block;
+        }
+        .logout-btn:hover {
+            background: #b71c1c;
+            color: #fff !important;
+            text-decoration: none;
+        }
+        nav {
+            margin: 1em 0;
+            padding: 1em;
+            background: #e3f2fd;
+            border-radius: 4px;
+        }
+        nav a {
+            margin-right: 1em;
+        }
+        .flashes {
+            margin-top: 1em;
+            padding: 1em;
+            border-radius: 4px;
+        }
+        .alert {
+            padding: 0.75em 1.25em;
+            border-radius: 4px;
+            margin-bottom: 1em;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Veterinaria</h1>
+        {% if current_user.is_authenticated %}
+            <p>
+                Bienvenido, {{ current_user.username }} ({{ current_user.role }})
+                | <a href="{{ url_for('main.logout') }}" class="logout-btn">Cerrar sesión</a>
+            </p>
+        {% endif %}
+        <hr>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+              {% for category, message in messages %}
+                <li class="alert alert-{{ category }}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        {% if current_user.is_authenticated and show_back_menu %}
+            <nav>
+                <a href="{% if current_user.role == 'admin' %}
+                            {{ url_for('main.admin_dashboard') }}
+                         {% elif current_user.role == 'receptionist' %}
+                            {{ url_for('main.receptionist_dashboard') }}
+                         {% elif current_user.role == 'vet' %}
+                            {{ url_for('main.vet_dashboard') }}
+                         {% endif %}" style="font-weight:bold;">
+                    &#8592; Volver al menú
+                </a>
+            </nav>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

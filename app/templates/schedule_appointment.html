@@ -20,9 +20,20 @@
 
     <label for="service_id">Servicio:</label>
     <select id="service_id" name="service_id" required>
-        {% for service in services %}
-        <option value="{{ service.id }}">{{ service.name }}</option>
-        {% endfor %}
+        <optgroup label="Servicios inmediatos">
+            {% for service in services %}
+                {% if service.attention_type == 'inmediato' %}
+                    <option value="{{ service.id }}">{{ service.name }}</option>
+                {% endif %}
+            {% endfor %}
+        </optgroup>
+        <optgroup label="Servicios con cita">
+            {% for service in services %}
+                {% if service.attention_type == 'cita' %}
+                    <option value="{{ service.id }}">{{ service.name }}</option>
+                {% endif %}
+            {% endfor %}
+        </optgroup>
     </select>
 
     <label for="vet_id">Veterinario:</label>

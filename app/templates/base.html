@@ -4,50 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Veterinaria{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f6f6f6;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(120deg, #e3f2fd 0%, #f8fafc 100%);
             margin: 0;
             padding: 0;
         }
         header {
-            background: #2a7ae2;
+            background: linear-gradient(90deg, #1976d2 60%, #43a047 100%);
             color: #fff;
-            padding: 1em;
+            padding: 1.5em 0 1em 0;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.2em;
+            letter-spacing: 2px;
+        }
+        header img {
+            vertical-align: middle;
+            width: 48px;
+            margin-right: 0.5em;
+        }
+        header p {
+            margin: 0.5em 0 0 0;
+            font-size: 1.1em;
         }
         main {
-            margin: 2em auto;
-            padding: 2em;
+            margin: 2.5em auto;
+            padding: 2.5em 2em;
             background: #fff;
-            max-width: 600px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            max-width: 700px;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(44, 62, 80, 0.10);
         }
         h1, h2 {
-            color: #2a7ae2;
+            color: #1976d2;
+            font-weight: 700;
         }
         form label {
             display: block;
             margin-top: 1em;
+            color: #1976d2;
+            font-weight: 600;
         }
-        form input, form select, form button {
+        form input, form select, form button, form textarea {
             width: 100%;
-            padding: 0.5em;
+            padding: 0.7em;
             margin-top: 0.2em;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 1px solid #b0bec5;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        form textarea {
+            min-height: 80px;
         }
         form button {
-            background: #2a7ae2;
+            background: linear-gradient(90deg, #1976d2 60%, #43a047 100%);
             color: #fff;
             border: none;
-            margin-top: 1em;
+            margin-top: 1.2em;
             cursor: pointer;
             font-weight: bold;
+            font-size: 1.1em;
+            transition: background 0.2s;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
         }
         form button:hover {
-            background: #1a5bb8;
+            background: linear-gradient(90deg, #1565c0 60%, #388e3c 100%);
         }
         ul {
             list-style: none;
@@ -57,28 +85,34 @@
             margin-bottom: 0.5em;
         }
         a {
-            color: #2a7ae2;
+            color: #1976d2;
             text-decoration: none;
+            transition: color 0.2s;
         }
         a:hover {
+            color: #43a047;
             text-decoration: underline;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1em;
+            margin-top: 1.5em;
+            background: #fafbfc;
+            border-radius: 8px;
+            overflow: hidden;
         }
         th, td {
             border: 1px solid #e0e0e0;
-            padding: 8px;
+            padding: 10px 8px;
             text-align: left;
         }
         th {
-            background: #2a7ae2;
+            background: #1976d2;
             color: #fff;
+            font-weight: 700;
         }
         tr:nth-child(even) {
-            background: #f6f6f6;
+            background: #f4f8fb;
         }
         .estado-pagado {
             color: #388e3c;
@@ -106,18 +140,19 @@
             text-decoration: none;
         }
         nav {
-            margin: 1em 0;
+            margin: 1.5em 0 1em 0;
             padding: 1em;
             background: #e3f2fd;
-            border-radius: 4px;
+            border-radius: 6px;
         }
         nav a {
-            margin-right: 1em;
+            margin-right: 1.2em;
+            font-weight: 600;
         }
         .flashes {
             margin-top: 1em;
             padding: 1em;
-            border-radius: 4px;
+            border-radius: 6px;
         }
         .alert {
             padding: 0.75em 1.25em;
@@ -140,14 +175,20 @@
             background-color: #fff3cd;
             color: #856404;
         }
+        @media (max-width: 800px) {
+            main {
+                max-width: 98vw;
+                padding: 1em;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
+        <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Logo veterinaria">
         <h1>Veterinaria</h1>
         {% if current_user.is_authenticated %}
             <p>
-                Bienvenido, {{ current_user.username }} ({{ current_user.role }})
                 | <a href="{{ url_for('main.logout') }}" class="logout-btn">Cerrar sesión</a>
             </p>
         {% endif %}

@@ -128,7 +128,7 @@ def payments():
     if request.method == 'POST':
         appointment_id = request.form['appointment_id']
         register_payment(appointment_id)
-        flash('Pago resitrado exitosamente.')
+        flash('Pago registrado exitosamente.')
         return redirect(url_for('main.payments'))
     return render_template('payments.html', appointments=appointments, show_back_menu=True)
 
@@ -161,7 +161,11 @@ def manage_users():
 @bp.route('/manage_services')
 @login_required
 def manage_services():
-    return render_template('manage_services.html', show_back_menu=True)
+    if current_user.role != 'admin':
+        flash('Acceso denegado.')
+        return redirect(url_for('main.index'))
+    services = Service.query.all()
+    return render_template('manage_services.html', services=services, show_back_menu=True)
 
 @bp.route('/reset_password/<int:user_id>', methods=['GET', 'POST'])
 @login_required
@@ -270,3 +274,32 @@ def my_appointments():
     # Filtra las citas solo del veterinario actual
     appointments = Appointment.query.filter_by(vet_id=current_user.id).order_by(Appointment.date.desc(), Appointment.time.desc()).all()
     return render_template('my_appointments.html', appointments=appointments, show_back_menu=True)
+
+@bp.route('/create_service', methods=['GET', 'POST'])
+@login_required
+def create_service():
+    if current_user.role != 'admin':
+        flash('Acceso denegado.')
+        return redirect(url_for('main.index'))
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        price = float(request.form['price'])
+        attention_type = request.form['attention_type']
+        service = Service(name=name, description=description, price=price, attention_type=attention_type)
+        db.session.add(service)
+        db.session.commit()
+        flash('Servicio creado exitosamente.')
+        return redirect(url_for('main.manage_services'))
+    return render_template('create_service.html', show_back_menu=True)
+
+@bp.route('/select_pet')
+@login_required
+def select_pet():
+    if current_user.role == 'vet':
+        # Mascotas que han tenido al menos una cita con este veterinario
+        pet_ids = db.session.query(Appointment.pet_id).filter_by(vet_id=current_user.id).distinct()
+        pets = Pet.query.filter(Pet.id.in_(pet_ids)).all()
+    else:
+        pets = Pet.query.all()
+    return render_template('select_pet.html', pets=pets, show_back_menu=True)

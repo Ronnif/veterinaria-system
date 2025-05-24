@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Seleccionar Mascota{% endblock %}
+{% block content %}
+<h2>Selecciona una mascota para ver su historial clínico</h2>
+<ul>
+    {% for pet in pets %}
+    <li>
+        <a href="{{ url_for('main.history_pet', pet_id=pet.id) }}">
+            {{ pet.name }} ({{ pet.species }}, dueño: {{ pet.owner.name }})
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -40,9 +40,10 @@ class Pet(db.Model):
 class Service(db.Model):
     """Service offered by the clinic."""
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
-    description = db.Column(db.Text)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(255))
     price = db.Column(db.Float, nullable=False)
+    attention_type = db.Column(db.String(20), nullable=False)  # 'inmediato' o 'cita'
     appointments = db.relationship('Appointment', backref='service', lazy=True)
 
 class Appointment(db.Model):

@@ -21,6 +21,6 @@
 </ul>
 {% endif %}
 {% if current_user.is_authenticated and current_user.role == 'vet' and pet %}
-    <a href="{{ url_for('main.add_clinical_observation', pet_id=pet.id) }}">Agregar observación clínica</a>
+    <a href="{{ url_for('main.add_clinical_observation_view', pet_id=pet.id) }}">Agregar observación clínica</a>
 {% endif %}
 {% endblock %}

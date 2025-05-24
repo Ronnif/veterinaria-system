@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Servicios{% endblock %}
+{% block content %}
+<h2>Servicios</h2>
+<a href="{{ url_for('main.create_service') }}" style="display:inline-block; margin-bottom:1em; background:#27ae60; color:#fff; padding:0.5em 1.5em; border-radius:6px; text-decoration:none; font-weight:bold;">+ Agregar nuevo servicio</a>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Tipo de atención</th>
+    </tr>
+    {% for service in services %}
+    <tr>
+        <td>{{ service.name }}</td>
+        <td>{{ service.description }}</td>
+        <td>S/. {{ service.price }}</td>
+        <td>{{ 'Inmediato' if service.attention_type == 'inmediato' else 'Con cita' }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

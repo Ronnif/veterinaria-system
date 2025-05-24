@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Agregar Servicio{% endblock %}
+{% block content %}
+<h2>Agregar Servicio</h2>
+<form method="post">
+    <label for="name">Nombre:</label><br>
+    <input type="text" id="name" name="name" required placeholder="Nombre del servicio"><br>
+    <label for="description">Descripción:</label><br>
+    <input type="text" id="description" name="description" placeholder="Descripción del servicio"><br>
+    <label for="price">Precio:</label><br>
+    <input type="number" id="price" name="price" step="0.01" required placeholder="Ej: 100.00"><br>
+    <label for="attention_type">Tipo de atención:</label><br>
+    <select id="attention_type" name="attention_type" required title="Seleccione el tipo de atención">
+        <option value="inmediato">Inmediato</option>
+        <option value="cita">Con cita</option>
+    </select><br><br>
+    <button type="submit">Guardar</button>
+</form>
+{% endblock %}

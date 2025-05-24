@@ -27,6 +27,7 @@
             <a href="{{ url_for('main.payments') }}" style="text-decoration:none; color:#fff; background:#c0392b; padding:1em 2em; border-radius:8px; font-weight:bold;">💳 Registrar pagos</a>
             <a href="{{ url_for('main.appointments_history') }}" style="text-decoration:none; color:#fff; background:#16a085; padding:1em 2em; border-radius:8px; font-weight:bold;">📖 Historial de citas</a>
             <a href="{{ url_for('main.change_password') }}" style="text-decoration:none; color:#fff; background:#34495e; padding:1em 2em; border-radius:8px; font-weight:bold;">🔒 Cambiar contraseña</a>
+            <a href="{{ url_for('main.manage_services') }}" style="text-decoration:none; color:#fff; background:#2980b9; padding:1em 2em; border-radius:8px; font-weight:bold;">🛠️ Gestionar servicios</a>
         {% elif current_user.role == 'receptionist' %}
             <a href="{{ url_for('main.register_client') }}" style="text-decoration:none; color:#fff; background:#27ae60; padding:1em 2em; border-radius:8px; font-weight:bold;">🐾 Registrar cliente</a>
             <a href="{{ url_for('main.register_pet') }}" style="text-decoration:none; color:#fff; background:#8e44ad; padding:1em 2em; border-radius:8px; font-weight:bold;">🐶 Registrar mascota</a>
@@ -36,7 +37,7 @@
             <a href="{{ url_for('main.change_password') }}" style="text-decoration:none; color:#fff; background:#34495e; padding:1em 2em; border-radius:8px; font-weight:bold;">🔒 Cambiar contraseña</a>
         {% elif current_user.role == 'vet' %}
             <a href="{{ url_for('main.my_appointments') }}" style="text-decoration:none; color:#fff; background:#2980b9; padding:1em 2em; border-radius:8px; font-weight:bold;">📅 Mis citas</a>
-            <a href="{{ url_for('main.history') }}" style="text-decoration:none; color:#fff; background:#16a085; padding:1em 2em; border-radius:8px; font-weight:bold;">📖 Historial clínico</a>
+            <a href="{{ url_for('main.select_pet') }}" style="text-decoration:none; color:#fff; background:#16a085; padding:1em 2em; border-radius:8px; font-weight:bold;">📖 Historial clínico</a>
             <a href="{{ url_for('main.change_password') }}" style="text-decoration:none; color:#fff; background:#34495e; padding:1em 2em; border-radius:8px; font-weight:bold;">🔒 Cambiar contraseña</a>
         {% endif %}
     </div>
